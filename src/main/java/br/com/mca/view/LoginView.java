@@ -5,6 +5,14 @@
  */
 package br.com.mca.view;
 
+import br.com.mca.controler.LoginControler;
+import br.com.mca.model.Login;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  *
  * @author ronald
@@ -48,6 +56,11 @@ public class LoginView extends javax.swing.JFrame {
         });
 
         btnLogin.setText("Login");
+        btnLogin.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLoginActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -95,6 +108,43 @@ public class LoginView extends javax.swing.JFrame {
     private void btnLimparActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimparActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnLimparActionPerformed
+
+    private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
+        String login = txtLogin.getText();      
+        char[] senha = txtSenha.getPassword();
+
+        
+             System.out.println(login + " formulario  " + new String(senha));
+        
+        
+        LoginControler lc = new LoginControler();
+        
+        try {
+            ArrayList<Login> loginList = lc .buscarLoginSenha();
+            
+            for(Login l : loginList ){
+                System.out.println(l.getLogin() + " banco  " + l.getSenha());
+                
+                if (l.getLogin().equalsIgnoreCase(login) && l.getSenha().equalsIgnoreCase(new String(senha))) {
+                    
+                    this.dispose(); // desaparece a tela de login
+                    
+                    SistemaView s = new SistemaView();
+                    s.setVisible(true);
+                    s.setLocationRelativeTo(null);
+                    
+                }
+            }
+            
+            
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(LoginView.class.getName()).log(Level.SEVERE, null, ex);
+            //TODO fazer JoptionPane
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(LoginView.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnLoginActionPerformed
 
     /**
      * @param args the command line arguments

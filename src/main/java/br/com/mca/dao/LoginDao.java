@@ -28,7 +28,13 @@ public class LoginDao {
             login.setLogin(rs.getString("log_nome"));
             login.setSenha(rs.getString("log_senha"));
             
+            
+            loginAux.add(login);
+            
         }
+        
+        
+        return loginAux;
         
         
     }
