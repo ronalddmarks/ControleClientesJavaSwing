@@ -13,6 +13,7 @@ public class Cliente {
     private Date nascimento;
     private String sexo;
     private String fone;
+    private String endereco;
 
   
     public Integer getCodigo() {
@@ -72,6 +73,16 @@ public class Cliente {
     public void setFone(String fone) {
         this.fone = fone;
     }
+
+    public String getEndereco() {
+        return endereco;
+    }
+
+    public void setEndereco(String endereco) {
+        this.endereco = endereco;
+    }
+    
+    
     
     
     

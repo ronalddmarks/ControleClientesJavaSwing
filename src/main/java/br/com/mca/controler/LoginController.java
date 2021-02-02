@@ -6,7 +6,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 
-public class LoginControler {
+public class LoginController {
     
     public ArrayList<Login> buscarLoginSenha() throws SQLException, ClassNotFoundException{
         

@@ -5,13 +5,14 @@
  */
 package br.com.mca.view;
 
-import br.com.mca.controler.LoginControler;
+import br.com.mca.controler.LoginController;
 import br.com.mca.model.Login;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -117,29 +118,38 @@ public class LoginView extends javax.swing.JFrame {
              System.out.println(login + " formulario  " + new String(senha));
         
         
-        LoginControler lc = new LoginControler();
+        LoginController lc = new LoginController();
         
         try {
-            ArrayList<Login> loginList = lc .buscarLoginSenha();
+            ArrayList<Login> loginList = lc.buscarLoginSenha();
             
             for(Login l : loginList ){
                 System.out.println(l.getLogin() + " banco  " + l.getSenha());
                 
                 if (l.getLogin().equalsIgnoreCase(login) && l.getSenha().equalsIgnoreCase(new String(senha))) {
                     
+                   // System.out.println("Login validado!!");
+                    
                     this.dispose(); // desaparece a tela de login
                     
+                    
+                    //redireciona para a tela do sistema
                     SistemaView s = new SistemaView();
                     s.setVisible(true);
                     s.setLocationRelativeTo(null);
                     
+                }else{
+                       JOptionPane.showMessageDialog(null, "Favor, verifique o usuario e senha", "Erro", JOptionPane.ERROR_MESSAGE);
                 }
+                
             }
             
             
             
         } catch (SQLException ex) {
             Logger.getLogger(LoginView.class.getName()).log(Level.SEVERE, null, ex);
+            
+         
             //TODO fazer JoptionPane
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(LoginView.class.getName()).log(Level.SEVERE, null, ex);

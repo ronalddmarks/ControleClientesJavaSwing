@@ -5,6 +5,8 @@
  */
 package br.com.mca.view;
 
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author ronald
@@ -47,6 +49,11 @@ public class SistemaView extends javax.swing.JFrame {
         jMenu1.setText("Cadastro");
 
         meniCadCliente.setText("Cliente");
+        meniCadCliente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                meniCadClienteActionPerformed(evt);
+            }
+        });
         jMenu1.add(meniCadCliente);
 
         jMenuBar1.add(jMenu1);
@@ -54,11 +61,26 @@ public class SistemaView extends javax.swing.JFrame {
         jMenu2.setText("Pesquisar");
 
         menuPesqCliente.setText("Cliente");
+        menuPesqCliente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuPesqClienteActionPerformed(evt);
+            }
+        });
         jMenu2.add(menuPesqCliente);
 
         jMenuBar1.add(jMenu2);
 
         menuSair.setText("Sair");
+        menuSair.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                menuSairMouseClicked(evt);
+            }
+        });
+        menuSair.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuSairActionPerformed(evt);
+            }
+        });
         jMenuBar1.add(menuSair);
 
         setJMenuBar(jMenuBar1);
@@ -84,8 +106,34 @@ public class SistemaView extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCardClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCardClienteActionPerformed
-        // TODO add your handling code here:
+
+        new ClienteView().show();
+
     }//GEN-LAST:event_btnCardClienteActionPerformed
+
+    private void meniCadClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_meniCadClienteActionPerformed
+        new ClienteView().show();
+    }//GEN-LAST:event_meniCadClienteActionPerformed
+
+    private void menuPesqClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuPesqClienteActionPerformed
+        new ClienteView().show();
+    }//GEN-LAST:event_menuPesqClienteActionPerformed
+
+    private void menuSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuSairActionPerformed
+
+
+    }//GEN-LAST:event_menuSairActionPerformed
+
+    private void menuSairMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuSairMouseClicked
+        String msg = "Deseja sair do sistema?";
+
+        int opcaoEscolha = JOptionPane.showConfirmDialog(null, msg, "Sistema", JOptionPane.YES_NO_OPTION);
+
+        if (opcaoEscolha == JOptionPane.YES_OPTION) {
+            System.exit(0);
+        }
+
+    }//GEN-LAST:event_menuSairMouseClicked
 
     /**
      * @param args the command line arguments
