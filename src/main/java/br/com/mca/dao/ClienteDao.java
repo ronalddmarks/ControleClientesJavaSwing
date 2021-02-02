@@ -5,14 +5,15 @@ import br.com.mca.util.ConnectionFactory;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import javax.swing.JOptionPane;
 
 public class ClienteDao extends Dao<Cliente> {
 
     @Override
     public boolean cadastrar(Cliente cliente) throws SQLException {
         PreparedStatement ps = null;
-        String sql = "INSERT INTO CLIENTE (CLI_NOME, CLI_CPF, CLI_DT_NASC, CLI_SEXO, CLI_FONE, CLI_ENDERECO)"
-                + " VALUES (?,?,?,?,?,?)";
+        String sql = "INSERT INTO CLIENTE (CLI_COD, CLI_NOME, CLI_CPF, CLI_DT_NASC, CLI_SEXO, CLI_FONE, CLI_ENDERECO)"
+                + " VALUES (CLIENTE_SEQ.nextval, ?,?,?,?,?,?)";
 
         try {
 
@@ -34,6 +35,8 @@ public class ClienteDao extends Dao<Cliente> {
                 
                 try {
                     ConnectionFactory.closeConnection(conn,ps);
+                    JOptionPane.showMessageDialog(null, "A informação foi salva com sucesso!");
+                    
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
