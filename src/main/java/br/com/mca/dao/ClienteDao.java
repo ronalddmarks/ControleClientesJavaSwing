@@ -30,37 +30,75 @@ public class ClienteDao extends Dao<Cliente> {
                 ps.setString(4, cliente.getSexo());
                 ps.setString(5, cliente.getFone());
                 ps.setString(6, cliente.getEndereco());
-                
+
                 ps.executeUpdate();
 
             } finally {
-                
+
                 try {
-                    ConnectionFactory.closeConnection(conn,ps);
-                 
-                    
+                    ConnectionFactory.closeConnection(conn, ps);
+
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-                
-                
+
             }
 
         } catch (SQLException e) {
             e.printStackTrace();
-            
-            
+
             return false;
 
         }
-        
+
         return true;
 
     }
 
     @Override
-    public boolean atualizar(Cliente pojo) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public boolean atualizar(Cliente cliente) throws SQLException {
+
+        PreparedStatement ps = null;
+        
+        String sql = "update cliente set cli_nome = ?, cli_cpf = ?, cli_dt_nasc = ?, cli_sexo = ?, cli_fone = ?, cli_endereco = ? where cli_cod = ?";
+
+        try {
+
+            Connection conn = this.obterConexao();
+
+            try {
+
+                ps = conn.prepareStatement(sql);
+                ps.setString(1, cliente.getNome());
+                ps.setString(2, cliente.getCpf());
+                ps.setDate(3, cliente.getNascimento());
+                ps.setString(4, cliente.getSexo());
+                ps.setString(5, cliente.getFone());
+                ps.setString(6, cliente.getEndereco());
+                ps.setString(7, cliente.getCodigo().toString());
+
+                ps.executeUpdate();
+
+            } finally {
+
+                try {
+                    ConnectionFactory.closeConnection(conn, ps);
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+
+            return false;
+
+        }
+
+        return true;
+
     }
 
     @Override
@@ -70,33 +108,31 @@ public class ClienteDao extends Dao<Cliente> {
 
     @Override
     public Integer getCodigo(Cliente cliente) throws SQLException {
-      
+
         PreparedStatement ps = null;
         Integer codigo = null;
         String sql = "select cli_cod from cliente where cli_cpf = ?";
-        
+
         try {
-            
+
             Connection conn = this.obterConexao();
             ps = conn.prepareStatement(sql);
             ps.setString(1, cliente.getCpf());
-            
-            
+
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
                 cliente.setCodigo(rs.getInt("cli_cod"));
                 codigo = cliente.getCodigo();
-                
+
             }
-            
+
         } catch (Exception e) {
-            
+
             e.printStackTrace();
         }
-        
+
         return codigo;
-        
-        
+
     }
 
 }

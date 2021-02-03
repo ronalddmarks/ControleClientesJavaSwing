@@ -353,7 +353,7 @@ public class ClienteView extends javax.swing.JFrame {
         btnEditar.setEnabled(false);
         btnAtualizar.setVisible(false);
         btnExcluir.setEnabled(false);
-        
+
         btnCancelar.setEnabled(true);
         btnSalvar.setEnabled(true);
         btnNovo.setEnabled(false);
@@ -369,6 +369,30 @@ public class ClienteView extends javax.swing.JFrame {
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
         operacao = OperacoesCrud.EDITAR.getOperacao();
+
+        if (tabelaCliente.getSelectedRow() == -1) {
+
+            if (tabelaCliente.getRowCount() == 0) {
+                JOptionPane.showMessageDialog(null, "A tabela está vazia!");
+
+            } else {
+
+                JOptionPane.showMessageDialog(null, "Deve ser selecionado um cliente!");
+
+            }
+
+        } else {
+            // quando selecionar um clinete 
+            btnExcluir.setEnabled(false);
+            btnNovo.setEnabled(false);
+            panelBotoesAcao.setVisible(true);
+            btnSalvar.setVisible(false);
+            btnAtualizar.setEnabled(true);
+
+            abrirCampos();
+
+        }
+
     }//GEN-LAST:event_btnEditarActionPerformed
 
     private void btnAtualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAtualizarActionPerformed
@@ -407,13 +431,11 @@ public class ClienteView extends javax.swing.JFrame {
         String rowCpf = tabelaCliente.getValueAt(tabelaCliente.getSelectedRow(), 2).toString();
         String rowSexo = tabelaCliente.getValueAt(tabelaCliente.getSelectedRow(), 3).toString();
         getSexoSelecionado(rowSexo);
-        
+
         String rowFone = tabelaCliente.getValueAt(tabelaCliente.getSelectedRow(), 5).toString();
 
         txtNome.setText(getNomeCliente());
         txtCPF.setText(rowCpf);
-
-        
 
         txtDtNasc.setDate(Util.converterToDate(tabelaCliente.getValueAt(tabelaCliente.getSelectedRow(), 4).toString()));
         txtTelefone.setText(rowFone);
@@ -425,10 +447,9 @@ public class ClienteView extends javax.swing.JFrame {
         btnNovo.setEnabled(true);
         btnEditar.setEnabled(true);
         btnExcluir.setEnabled(true);
-        
+
         panelBotoesAcao.setVisible(false);
-      
-        
+
         fecharCampos();
     }//GEN-LAST:event_btnCancelarActionPerformed
 
@@ -532,6 +553,22 @@ public class ClienteView extends javax.swing.JFrame {
 
             } else if (operacao == OperacoesCrud.EDITAR.getOperacao()) {
 
+                cliente.setCodigo(getCodigo());
+
+                //chamada do controller para realizar a persistencia
+                clienteController.atualizar(cliente);
+
+                //recuperar as informações inseridas no campos e atualizar as linhas da tabela
+                model.setValueAt(nome, tabelaCliente.getSelectedRow(), 1);
+                model.setValueAt(cpf, tabelaCliente.getSelectedRow(), 2);
+                model.setValueAt(sexo, tabelaCliente.getSelectedRow(), 3);
+                model.setValueAt(Util.ConvertToString(dateNasc), tabelaCliente.getSelectedRow(), 4);
+                model.setValueAt(fone, tabelaCliente.getSelectedRow(), 5);
+
+                
+                     JOptionPane.showMessageDialog(null, "O cliente " + cliente.getNome() + " foi Atualizado com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+
+
             }
 
         } catch (SQLException ex) {
@@ -605,7 +642,6 @@ public class ClienteView extends javax.swing.JFrame {
                 Integer rsCodigo = rs.getInt("cli_cod");
                 String rsNome = rs.getString("cli_nome");
                 String rsCpf = rs.getString("cli_cpf");
-                
 
                 String rsSexo = rs.getString("cli_sexo");
                 if (rsSexo.equals("M")) {
@@ -649,17 +685,16 @@ public class ClienteView extends javax.swing.JFrame {
         if (rowSexo.equals("Masculino")) {
             rbMasculino.setSelected(true);
             rbFeminino.setSelected(false);
-        }else{
+        } else {
             rbMasculino.setSelected(false);
             rbFeminino.setSelected(true);
-            
+
         }
 
     }
 
     private void fecharCampos() {
-        
- 
+
         txtNome.setEnabled(false);
         txtCPF.setEnabled(false);
         txtDtNasc.setEnabled(false);
@@ -667,8 +702,7 @@ public class ClienteView extends javax.swing.JFrame {
         txtTelefone.setEnabled(false);
         rbMasculino.setEnabled(false);
         rbFeminino.setEnabled(false);
-        
-        
+
     }
 
 }
