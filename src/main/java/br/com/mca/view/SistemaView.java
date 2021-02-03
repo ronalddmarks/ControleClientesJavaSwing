@@ -38,6 +38,7 @@ public class SistemaView extends javax.swing.JFrame {
         menuSair = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Principal");
 
         btnCardCliente.setText("Clientes");
         btnCardCliente.addActionListener(new java.awt.event.ActionListener() {
@@ -116,7 +117,7 @@ public class SistemaView extends javax.swing.JFrame {
     }//GEN-LAST:event_meniCadClienteActionPerformed
 
     private void menuPesqClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuPesqClienteActionPerformed
-        new ClienteView().show();
+        new PesquisaView().show();
     }//GEN-LAST:event_menuPesqClienteActionPerformed
 
     private void menuSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuSairActionPerformed

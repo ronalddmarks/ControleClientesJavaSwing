@@ -36,6 +36,7 @@ public class PesquisaView extends javax.swing.JFrame {
         tabelaClientes = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Pesquisa de clientes");
 
         jLabel1.setText("Nome:");
 
