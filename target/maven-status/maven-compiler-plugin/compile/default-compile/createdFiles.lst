@@ -24,6 +24,7 @@ br/com/mca/util/TesteJOptionP.class
 br/com/mca/model/Login.class
 br/com/mca/util/OperacoesCrud.class
 br/com/mca/view/ClienteView$2.class
+br/com/mca/view/ClienteView$11.class
 br/com/mca/view/ClienteView$6.class
 br/com/mca/view/LoginView$1.class
 br/com/mca/view/SistemaView.class

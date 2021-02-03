@@ -96,6 +96,11 @@ public class ClienteView extends javax.swing.JFrame {
         });
 
         btnExcluir.setText("Excluir");
+        btnExcluir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnExcluirActionPerformed(evt);
+            }
+        });
 
         btnSair.setText("Sair");
 
@@ -453,6 +458,34 @@ public class ClienteView extends javax.swing.JFrame {
         fecharCampos();
     }//GEN-LAST:event_btnCancelarActionPerformed
 
+    private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
+
+        if (tabelaCliente.getSelectedRow() == -1) {
+
+            if (tabelaCliente.getRowCount() == 0) {
+                JOptionPane.showMessageDialog(null, "A tabela está vazia!");
+
+            } else {
+
+                JOptionPane.showMessageDialog(null, "Deve ser selecionado um cliente!");
+
+            }
+
+        } else {
+            // quando selecionar um clinete 
+
+            btnNovo.setEnabled(false);
+            panelBotoesAcao.setVisible(true);
+            btnSalvar.setVisible(false);
+            btnAtualizar.setEnabled(false);
+
+            excluirDados();
+
+            limparCampos();
+
+        }
+    }//GEN-LAST:event_btnExcluirActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -565,9 +598,7 @@ public class ClienteView extends javax.swing.JFrame {
                 model.setValueAt(Util.ConvertToString(dateNasc), tabelaCliente.getSelectedRow(), 4);
                 model.setValueAt(fone, tabelaCliente.getSelectedRow(), 5);
 
-                
-                     JOptionPane.showMessageDialog(null, "O cliente " + cliente.getNome() + " foi Atualizado com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
-
+                JOptionPane.showMessageDialog(null, "O cliente " + cliente.getNome() + " foi Atualizado com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
 
             }
 
@@ -703,6 +734,33 @@ public class ClienteView extends javax.swing.JFrame {
         rbMasculino.setEnabled(false);
         rbFeminino.setEnabled(false);
 
+    }
+
+    private void excluirDados() {
+
+        String msg = "Deletar o cliente: " + getNomeCliente() + "?";
+        int opcaoEscolhida = JOptionPane.showConfirmDialog(null, msg, "Exclusão", JOptionPane.YES_NO_OPTION);
+
+        if (opcaoEscolhida == JOptionPane.YES_OPTION) {
+            Cliente cliente = new Cliente();
+            cliente.setCodigo(getCodigo());
+
+            try {
+                ClienteController clienteController = new ClienteController();
+                clienteController.excluir(cliente);
+
+                // remover a linha da tabela selecionada 
+                model.removeRow(tabelaCliente.getSelectedRow());
+
+                JOptionPane.showMessageDialog(null, "O cliente " + getCodigo() + " foi Excluido com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+
+            } catch (SQLException e) {
+                e.printStackTrace();
+            } catch (Exception e2) {
+                e2.printStackTrace();
+            }
+
+        }
     }
 
 }
