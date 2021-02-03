@@ -15,6 +15,7 @@ br/com/mca/controler/Dao.class
 br/com/mca/controler/ClienteController.class
 br/com/mca/view/ClienteView$9.class
 br/com/mca/util/Util.class
+br/com/mca/view/PesquisaView$3.class
 br/com/mca/view/SistemaView$1.class
 br/com/mca/view/PesquisaView.class
 br/com/mca/dao/ClienteDao.class
@@ -26,6 +27,7 @@ br/com/mca/util/OperacoesCrud.class
 br/com/mca/view/ClienteView$2.class
 br/com/mca/view/ClienteView$11.class
 br/com/mca/view/ClienteView$6.class
+br/com/mca/view/PesquisaView$4.class
 br/com/mca/view/LoginView$1.class
 br/com/mca/view/SistemaView.class
 br/com/mca/dao/LoginDao.class
