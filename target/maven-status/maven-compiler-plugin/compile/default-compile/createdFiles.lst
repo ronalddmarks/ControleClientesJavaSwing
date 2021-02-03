@@ -13,6 +13,8 @@ br/com/mca/view/SistemaView$6.class
 br/com/mca/view/LoginView$2.class
 br/com/mca/controler/Dao.class
 br/com/mca/controler/ClienteController.class
+br/com/mca/view/ClienteView$9.class
+br/com/mca/util/Util.class
 br/com/mca/view/SistemaView$1.class
 br/com/mca/view/PesquisaView.class
 br/com/mca/dao/ClienteDao.class

@@ -4,6 +4,7 @@ import br.com.mca.controler.ClienteController;
 import br.com.mca.model.Cliente;
 import br.com.mca.util.ConnectionFactory;
 import br.com.mca.util.OperacoesCrud;
+import br.com.mca.util.Util;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -13,6 +14,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
+import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -24,6 +26,10 @@ public class ClienteView extends javax.swing.JFrame {
     public Integer operacao;
     private String sexo;
     private DefaultTableModel model;
+
+    // variaveis em tempo de execução
+    private Integer codigo;
+    private String nomeCliente;
 
     public ClienteView() {
         initComponents();
@@ -128,6 +134,11 @@ public class ClienteView extends javax.swing.JFrame {
                 "Código", "Nome", "CPF", "Sexo", "Data de Nascimento", "Fone"
             }
         ));
+        tabelaCliente.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tabelaClienteMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tabelaCliente);
 
         jLabel1.setText("Nome:");
@@ -364,6 +375,34 @@ public class ClienteView extends javax.swing.JFrame {
         sexo = rbFeminino.getText();
     }//GEN-LAST:event_rbFemininoActionPerformed
 
+    private void tabelaClienteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelaClienteMouseClicked
+        // recuperar as informaçoes da tabela
+        ListSelectionModel tableSelectionModel = tabelaCliente.getSelectionModel();
+
+        //refresh - limppeza do cache da tabela
+        tabelaCliente.setSelectionModel(tableSelectionModel);
+
+        //armazena a linha selecionada nas variaveis de instancia para utilziar nas operaçoes de atualização e exclusão
+        setCodigo(Integer.parseInt(tabelaCliente.getValueAt(tabelaCliente.getSelectedRow(), 0).toString()));
+        setNomeCliente(tabelaCliente.getValueAt(tabelaCliente.getSelectedRow(), 1).toString());
+
+        String rowCpf = tabelaCliente.getValueAt(tabelaCliente.getSelectedRow(), 2).toString();
+        String rowSexo = tabelaCliente.getValueAt(tabelaCliente.getSelectedRow(), 3).toString();
+        getSexoSelecionado(rowSexo);
+        
+        String rowFone = tabelaCliente.getValueAt(tabelaCliente.getSelectedRow(), 5).toString();
+
+        txtNome.setText(getNomeCliente());
+        txtCPF.setText(rowCpf);
+
+        
+
+        txtDtNasc.setDate(Util.converterToDate(tabelaCliente.getValueAt(tabelaCliente.getSelectedRow(), 4).toString()));
+        txtTelefone.setText(rowFone);
+
+
+    }//GEN-LAST:event_tabelaClienteMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -454,9 +493,9 @@ public class ClienteView extends javax.swing.JFrame {
             if (operacao == OperacoesCrud.NOVO.getOperacao()) {
 
                 clienteController.cadastrar(cliente);
-                
+
                 carregarDadosTabela();
-            //  model.addRow(new Object[]{clienteController.getCodigo(cliente), nome, cpf, sexo, cliente.getNascimento(), fone});
+                //  model.addRow(new Object[]{clienteController.getCodigo(cliente), nome, cpf, sexo, cliente.getNascimento(), fone});
 
                 JOptionPane.showMessageDialog(null, "O cliente " + cliente.getNome() + " foi salvo com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
 
@@ -530,9 +569,10 @@ public class ClienteView extends javax.swing.JFrame {
                 Integer rsCodigo = rs.getInt("cli_cod");
                 String rsNome = rs.getString("cli_nome");
                 String rsCpf = rs.getString("cli_cpf");
+                
 
                 String rsSexo = rs.getString("cli_sexo");
-                if (rs.equals("M")) {
+                if (rsSexo.equals("M")) {
                     rsSexo = "Masculino";
                 } else {
                     rsSexo = "Feminino";
@@ -543,12 +583,40 @@ public class ClienteView extends javax.swing.JFrame {
                 String rsFone = rs.getString("cli_fone");
 
                 //preenche os dados da Jtacle que estao retornando do banco de dados
-                model.addRow(new Object[]{rsCodigo, rsNome, rsCpf, rsSexo, rsNasc, rsFone});
+                model.addRow(new Object[]{rsCodigo, rsNome, rsCpf, rsSexo, Util.ConvertToString(rsNasc), rsFone});
 
             }
 
         } catch (Exception e) {
             e.printStackTrace();
+        }
+
+    }
+
+    public Integer getCodigo() {
+        return codigo;
+    }
+
+    public void setCodigo(Integer codigo) {
+        this.codigo = codigo;
+    }
+
+    public String getNomeCliente() {
+        return nomeCliente;
+    }
+
+    public void setNomeCliente(String nomeCliente) {
+        this.nomeCliente = nomeCliente;
+    }
+
+    private void getSexoSelecionado(String rowSexo) {
+        if (rowSexo.equals("Masculino")) {
+            rbMasculino.setSelected(true);
+            rbFeminino.setSelected(false);
+        }else{
+            rbMasculino.setSelected(false);
+            rbFeminino.setSelected(true);
+            
         }
 
     }
