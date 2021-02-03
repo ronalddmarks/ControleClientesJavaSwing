@@ -8,6 +8,7 @@ br/com/mca/view/LoginView.class
 br/com/mca/view/ClienteView.class
 br/com/mca/controler/LoginController.class
 br/com/mca/view/ClienteView$1.class
+br/com/mca/view/ClienteView$7.class
 br/com/mca/view/SistemaView$6.class
 br/com/mca/view/LoginView$2.class
 br/com/mca/controler/Dao.class
@@ -31,3 +32,4 @@ br/com/mca/util/StandardException.class
 br/com/mca/util/ConnectionFactory.class
 br/com/mca/view/PesquisaView$2.class
 br/com/mca/view/SistemaView$5.class
+br/com/mca/view/ClienteView$8.class

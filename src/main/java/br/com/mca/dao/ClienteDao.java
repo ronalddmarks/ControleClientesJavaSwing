@@ -35,7 +35,7 @@ public class ClienteDao extends Dao<Cliente> {
                 
                 try {
                     ConnectionFactory.closeConnection(conn,ps);
-                    JOptionPane.showMessageDialog(null, "A informação foi salva com sucesso!");
+                 
                     
                 } catch (Exception e) {
                     e.printStackTrace();

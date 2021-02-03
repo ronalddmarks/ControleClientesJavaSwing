@@ -7,6 +7,7 @@ import java.sql.Date;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -15,16 +16,16 @@ import java.util.logging.Logger;
 public class ClienteView extends javax.swing.JFrame {
 
     public Integer operacao;
-    
-    
-    
+    private String sexo;
+
     public ClienteView() {
         initComponents();
-        
+
         panelBotoesAcao.setVisible(false);
         
-        
-        
+          limparCampos();
+       
+
     }
 
     /**
@@ -150,8 +151,18 @@ public class ClienteView extends javax.swing.JFrame {
         });
 
         rbMasculino.setText("Masculino");
+        rbMasculino.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rbMasculinoActionPerformed(evt);
+            }
+        });
 
         rbFeminino.setText("Feminino");
+        rbFeminino.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rbFemininoActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -306,27 +317,25 @@ public class ClienteView extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNovoActionPerformed
-        
+
         operacao = OperacoesCrud.NOVO.getOperacao();
-        
-        
+
         btnEditar.setEnabled(false);
         btnAtualizar.setVisible(false);
         btnExcluir.setEnabled(false);
-        
+
         panelBotoesAcao.setVisible(true);
-        
+
         abrirCampos();
         
-      
-        
-        
-  
-        
+        limparCampos();
+       
+
+
     }//GEN-LAST:event_btnNovoActionPerformed
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
-      operacao = OperacoesCrud.EDITAR.getOperacao();
+        operacao = OperacoesCrud.EDITAR.getOperacao();
     }//GEN-LAST:event_btnEditarActionPerformed
 
     private void btnAtualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAtualizarActionPerformed
@@ -340,6 +349,16 @@ public class ClienteView extends javax.swing.JFrame {
     private void txtEnderecoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtEnderecoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtEnderecoActionPerformed
+
+    private void rbMasculinoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbMasculinoActionPerformed
+        rbFeminino.setSelected(false);
+        sexo = rbMasculino.getText();
+    }//GEN-LAST:event_rbMasculinoActionPerformed
+
+    private void rbFemininoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbFemininoActionPerformed
+        rbMasculino.setSelected(false);
+        sexo = rbFeminino.getText();
+    }//GEN-LAST:event_rbFemininoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -407,54 +426,78 @@ public class ClienteView extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 
     private void gravarAtualizarDados() {
-        
+
         // recupera os dados da tela
-         String nome = txtNome.getText();
-         String cpf = txtCPF.getText();
-         String fone = txtTelefone.getText();
-         Date dateNasc = new Date(txtDtNasc.getDate().getTime());
-         String endereco = txtEndereco.getText();
-         
-         
+        String nome = txtNome.getText();
+        String cpf = txtCPF.getText();
+        String fone = txtTelefone.getText();
+        Date dateNasc = new Date(txtDtNasc.getDate().getTime());
+        String endereco = txtEndereco.getText();
+
         // atribuindo os dados de tela e atribuindo para o objeto cliente 
         Cliente cliente = new Cliente();
         cliente.setNome(nome);
         cliente.setCpf(cpf);
         cliente.setFone(fone);
-       // cliente.setSexo(  );
+        cliente.setSexo(formatarCampoSexo(sexo));
         cliente.setNascimento(dateNasc);
         cliente.setEndereco(endereco);
-        
+
         ClienteController clienteController = new ClienteController();
-        
+
         try {
-            clienteController.cadastrar(cliente);
-             
-            if(operacao == OperacoesCrud.NOVO.getOperacao()){
+
+            if (operacao == OperacoesCrud.NOVO.getOperacao()) {
+
+                clienteController.cadastrar(cliente);
+
+                JOptionPane.showMessageDialog(null, "O cliente " + cliente.getNome() + " foi salvo com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+
+               limparCampos();
             
-            }else if(operacao == OperacoesCrud.EDITAR.getOperacao()){
-            
-            
+            } else if (operacao == OperacoesCrud.EDITAR.getOperacao()) {
+
             }
-            
-       
+
         } catch (SQLException ex) {
             Logger.getLogger(ClienteView.class.getName()).log(Level.SEVERE, null, ex);
         }
-       
+
     }
-    
-    
-    private void abrirCampos(){
-         
+
+    private void abrirCampos() {
+
         txtNome.setEditable(true);
         txtCPF.setEditable(true);
         txtDtNasc.setEnabled(true);
         txtEndereco.setEditable(true);
         txtTelefone.setEditable(true);
-                      
-        
+
     }
     
-    
+    private void limparCampos(){
+        txtNome.setText("");
+        txtCPF.setText("");
+        txtDtNasc.setDate(null);
+        txtEndereco.setText("");
+        txtTelefone.setText("");
+        rbMasculino.setSelected(false);
+        rbFeminino.setSelected(false);
+        
+        
+        
+    }
+
+    private String formatarCampoSexo(String sexo) {
+
+        if (sexo.equals("Masculino")) {
+            sexo = "M";
+        } else {
+            sexo = "F";
+        }
+
+        return sexo;
+
+    }
+
 }
