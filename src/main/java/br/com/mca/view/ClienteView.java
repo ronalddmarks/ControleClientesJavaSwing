@@ -2,12 +2,18 @@ package br.com.mca.view;
 
 import br.com.mca.controler.ClienteController;
 import br.com.mca.model.Cliente;
+import br.com.mca.util.ConnectionFactory;
 import br.com.mca.util.OperacoesCrud;
+import java.sql.Connection;
 import java.sql.Date;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -17,14 +23,16 @@ public class ClienteView extends javax.swing.JFrame {
 
     public Integer operacao;
     private String sexo;
+    private DefaultTableModel model;
 
     public ClienteView() {
         initComponents();
 
         panelBotoesAcao.setVisible(false);
-        
-          limparCampos();
-       
+
+        carregarDadosTabela();
+
+        limparCampos();
 
     }
 
@@ -114,13 +122,10 @@ public class ClienteView extends javax.swing.JFrame {
 
         tabelaCliente.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+
             },
             new String [] {
-                "Código", "Nome", "CPF", "Data de nascimento", "Fone"
+                "Código", "Nome", "CPF", "Sexo", "Data de Nascimento", "Fone"
             }
         ));
         jScrollPane1.setViewportView(tabelaCliente);
@@ -287,16 +292,16 @@ public class ClienteView extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 25, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 641, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(22, 22, 22))
             .addGroup(layout.createSequentialGroup()
                 .addGap(59, 59, 59)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(28, 28, 28)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(185, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 657, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(20, 20, 20))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -308,9 +313,9 @@ public class ClienteView extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(59, 59, 59)
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(30, 30, 30)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 38, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(16, Short.MAX_VALUE))
+                .addGap(41, 41, 41))
         );
 
         pack();
@@ -327,9 +332,8 @@ public class ClienteView extends javax.swing.JFrame {
         panelBotoesAcao.setVisible(true);
 
         abrirCampos();
-        
+
         limparCampos();
-       
 
 
     }//GEN-LAST:event_btnNovoActionPerformed
@@ -450,11 +454,14 @@ public class ClienteView extends javax.swing.JFrame {
             if (operacao == OperacoesCrud.NOVO.getOperacao()) {
 
                 clienteController.cadastrar(cliente);
+                
+                carregarDadosTabela();
+            //  model.addRow(new Object[]{clienteController.getCodigo(cliente), nome, cpf, sexo, cliente.getNascimento(), fone});
 
                 JOptionPane.showMessageDialog(null, "O cliente " + cliente.getNome() + " foi salvo com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
 
-               limparCampos();
-            
+                limparCampos();
+
             } else if (operacao == OperacoesCrud.EDITAR.getOperacao()) {
 
             }
@@ -474,8 +481,8 @@ public class ClienteView extends javax.swing.JFrame {
         txtTelefone.setEditable(true);
 
     }
-    
-    private void limparCampos(){
+
+    private void limparCampos() {
         txtNome.setText("");
         txtCPF.setText("");
         txtDtNasc.setDate(null);
@@ -483,9 +490,7 @@ public class ClienteView extends javax.swing.JFrame {
         txtTelefone.setText("");
         rbMasculino.setSelected(false);
         rbFeminino.setSelected(false);
-        
-        
-        
+
     }
 
     private String formatarCampoSexo(String sexo) {
@@ -497,6 +502,54 @@ public class ClienteView extends javax.swing.JFrame {
         }
 
         return sexo;
+
+    }
+
+    private void carregarDadosTabela() {
+
+        String sql = "select cli_cod, cli_nome, cli_cpf, cli_sexo, cli_dt_nasc, cli_fone from cliente order by cli_cod";
+
+        try {
+
+            Connection connection = ConnectionFactory.getConexao();
+            PreparedStatement ps = connection.prepareStatement(sql);
+
+            ResultSet rs = ps.executeQuery();
+
+            tabelaCliente.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+            tabelaCliente.getColumnModel().getColumn(0).setPreferredWidth(50);
+            tabelaCliente.getColumnModel().getColumn(1).setPreferredWidth(180);
+            tabelaCliente.getColumnModel().getColumn(2).setPreferredWidth(100);
+            tabelaCliente.getColumnModel().getColumn(3).setPreferredWidth(100);
+            tabelaCliente.getColumnModel().getColumn(4).setPreferredWidth(105);
+            tabelaCliente.getColumnModel().getColumn(5).setPreferredWidth(100);
+
+            model = (DefaultTableModel) tabelaCliente.getModel();
+
+            while (rs.next()) {
+                Integer rsCodigo = rs.getInt("cli_cod");
+                String rsNome = rs.getString("cli_nome");
+                String rsCpf = rs.getString("cli_cpf");
+
+                String rsSexo = rs.getString("cli_sexo");
+                if (rs.equals("M")) {
+                    rsSexo = "Masculino";
+                } else {
+                    rsSexo = "Feminino";
+                }
+
+                Date rsNasc = (Date) rs.getDate("cli_dt_nasc");
+
+                String rsFone = rs.getString("cli_fone");
+
+                //preenche os dados da Jtacle que estao retornando do banco de dados
+                model.addRow(new Object[]{rsCodigo, rsNome, rsCpf, rsSexo, rsNasc, rsFone});
+
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
     }
 
