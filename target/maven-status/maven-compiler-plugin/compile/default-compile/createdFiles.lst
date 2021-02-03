@@ -28,6 +28,7 @@ br/com/mca/view/ClienteView$6.class
 br/com/mca/view/LoginView$1.class
 br/com/mca/view/SistemaView.class
 br/com/mca/dao/LoginDao.class
+br/com/mca/view/ClienteView$10.class
 br/com/mca/dao/Dao.class
 br/com/mca/view/SistemaView$2.class
 br/com/mca/util/StandardException.class

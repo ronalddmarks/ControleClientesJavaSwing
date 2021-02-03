@@ -52,7 +52,7 @@ public class ClienteView extends javax.swing.JFrame {
     private void initComponents() {
 
         dateChooserCombo2 = new datechooser.beans.DateChooserCombo();
-        jPanel1 = new javax.swing.JPanel();
+        painelBtnAcoesPrincipais = new javax.swing.JPanel();
         btnNovo = new javax.swing.JButton();
         btnEditar = new javax.swing.JButton();
         btnExcluir = new javax.swing.JButton();
@@ -99,22 +99,22 @@ public class ClienteView extends javax.swing.JFrame {
 
         btnSair.setText("Sair");
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+        javax.swing.GroupLayout painelBtnAcoesPrincipaisLayout = new javax.swing.GroupLayout(painelBtnAcoesPrincipais);
+        painelBtnAcoesPrincipais.setLayout(painelBtnAcoesPrincipaisLayout);
+        painelBtnAcoesPrincipaisLayout.setHorizontalGroup(
+            painelBtnAcoesPrincipaisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(painelBtnAcoesPrincipaisLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(painelBtnAcoesPrincipaisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(btnExcluir, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnSair, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnEditar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnNovo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+        painelBtnAcoesPrincipaisLayout.setVerticalGroup(
+            painelBtnAcoesPrincipaisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(painelBtnAcoesPrincipaisLayout.createSequentialGroup()
                 .addGap(26, 26, 26)
                 .addComponent(btnNovo)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -144,10 +144,12 @@ public class ClienteView extends javax.swing.JFrame {
         jLabel1.setText("Nome:");
 
         txtNome.setEditable(false);
+        txtNome.setEnabled(false);
 
         jLabel2.setText("CPF:");
 
         txtCPF.setEditable(false);
+        txtCPF.setEnabled(false);
 
         jLabel3.setText("Sexo:");
 
@@ -156,10 +158,12 @@ public class ClienteView extends javax.swing.JFrame {
         jLabel6.setText("Endereço:");
 
         txtTelefone.setEditable(false);
+        txtTelefone.setEnabled(false);
 
         jLabel4.setText("Fone:");
 
         txtEndereco.setEditable(false);
+        txtEndereco.setEnabled(false);
         txtEndereco.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtEnderecoActionPerformed(evt);
@@ -167,6 +171,7 @@ public class ClienteView extends javax.swing.JFrame {
         });
 
         rbMasculino.setText("Masculino");
+        rbMasculino.setEnabled(false);
         rbMasculino.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 rbMasculinoActionPerformed(evt);
@@ -174,6 +179,7 @@ public class ClienteView extends javax.swing.JFrame {
         });
 
         rbFeminino.setText("Feminino");
+        rbFeminino.setEnabled(false);
         rbFeminino.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 rbFemininoActionPerformed(evt);
@@ -203,6 +209,7 @@ public class ClienteView extends javax.swing.JFrame {
         txtDtNasc.setEnabled(false);
 
         btnSalvar.setText("Salvar");
+        btnSalvar.setEnabled(false);
         btnSalvar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnSalvarActionPerformed(evt);
@@ -210,6 +217,7 @@ public class ClienteView extends javax.swing.JFrame {
         });
 
         btnAtualizar.setText("Atualizar");
+        btnAtualizar.setEnabled(false);
         btnAtualizar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAtualizarActionPerformed(evt);
@@ -217,6 +225,12 @@ public class ClienteView extends javax.swing.JFrame {
         });
 
         btnCancelar.setText("Cancelar");
+        btnCancelar.setEnabled(false);
+        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout panelBotoesAcaoLayout = new javax.swing.GroupLayout(panelBotoesAcao);
         panelBotoesAcao.setLayout(panelBotoesAcaoLayout);
@@ -305,7 +319,7 @@ public class ClienteView extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(59, 59, 59)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(painelBtnAcoesPrincipais, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(28, 28, 28)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(185, Short.MAX_VALUE))
@@ -323,7 +337,7 @@ public class ClienteView extends javax.swing.JFrame {
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(59, 59, 59)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(painelBtnAcoesPrincipais, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 38, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(41, 41, 41))
@@ -339,6 +353,10 @@ public class ClienteView extends javax.swing.JFrame {
         btnEditar.setEnabled(false);
         btnAtualizar.setVisible(false);
         btnExcluir.setEnabled(false);
+        
+        btnCancelar.setEnabled(true);
+        btnSalvar.setEnabled(true);
+        btnNovo.setEnabled(false);
 
         panelBotoesAcao.setVisible(true);
 
@@ -403,6 +421,17 @@ public class ClienteView extends javax.swing.JFrame {
 
     }//GEN-LAST:event_tabelaClienteMouseClicked
 
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+        btnNovo.setEnabled(true);
+        btnEditar.setEnabled(true);
+        btnExcluir.setEnabled(true);
+        
+        panelBotoesAcao.setVisible(false);
+      
+        
+        fecharCampos();
+    }//GEN-LAST:event_btnCancelarActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -453,10 +482,10 @@ public class ClienteView extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JPanel painelBtnAcoesPrincipais;
     private javax.swing.JPanel panelBotoesAcao;
     private javax.swing.JRadioButton rbFeminino;
     private javax.swing.JRadioButton rbMasculino;
@@ -514,10 +543,17 @@ public class ClienteView extends javax.swing.JFrame {
     private void abrirCampos() {
 
         txtNome.setEditable(true);
+        txtNome.setEnabled(true);
         txtCPF.setEditable(true);
+        txtCPF.setEnabled(true);
+        txtDtNasc.setEnabled(true);
         txtDtNasc.setEnabled(true);
         txtEndereco.setEditable(true);
+        txtEndereco.setEnabled(true);
         txtTelefone.setEditable(true);
+        txtTelefone.setEnabled(true);
+        rbMasculino.setEnabled(true);
+        rbFeminino.setEnabled(true);
 
     }
 
@@ -619,6 +655,20 @@ public class ClienteView extends javax.swing.JFrame {
             
         }
 
+    }
+
+    private void fecharCampos() {
+        
+ 
+        txtNome.setEnabled(false);
+        txtCPF.setEnabled(false);
+        txtDtNasc.setEnabled(false);
+        txtEndereco.setEnabled(false);
+        txtTelefone.setEnabled(false);
+        rbMasculino.setEnabled(false);
+        rbFeminino.setEnabled(false);
+        
+        
     }
 
 }
